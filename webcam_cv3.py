@@ -4,16 +4,17 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-cascPath = "figuraGojo.xml"
-faceCascade = cv2.CascadeClassifier(cascPath)
-log.basicConfig(filename='webcam.log',level=log.INFO)
+cascPath = "carterav3.xml"
+objetoCascade = cv2.CascadeClassifier(cascPath)
+log.basicConfig(filename = "webcam.log", level = log.INFO)
 
 video_capture = cv2.VideoCapture(0)
 anterior = 0
+cant = 0
 
 while True:
     if not video_capture.isOpened():
-        print('Unable to load camera.')
+        print("Unable to load camera.")
         sleep(5)
         pass
 
@@ -22,32 +23,32 @@ while True:
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    faces = faceCascade.detectMultiScale(
+    objetos = objetoCascade.detectMultiScale(
         gray,
-        #scaleFactor=1.1,
-        scaleFactor=4,
-        minNeighbors=40, 
-        minSize=(50, 50)
+        # scaleFactor=1.1,
+        scaleFactor = 1.5,
+        minNeighbors = -2,
+        minSize = (2, 2),
     )
 
     # Draw a rectangle around the faces
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    for x, y, w, h in objetos:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        print("Se detecta correctamente", cant + 1)
+        cant = cant + 1
 
-    if anterior != len(faces):
-        anterior = len(faces)
-        log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
-
+    if anterior != len(objetos):
+        anterior = len(objetos)
+        log.info("faces: " + str(len(objetos)) + " at " + str(dt.datetime.now()))
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
+    cv2.imshow("Video", frame)
 
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
+    cv2.imshow("Video", frame)
 
 # When everything is done, release the capture
 video_capture.release()
