@@ -4,7 +4,7 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-cascPath = "carterav3.xml"
+cascPath = "carterav5_mimagenes.xml"
 objetoCascade = cv2.CascadeClassifier(cascPath)
 log.basicConfig(filename = "webcam.log", level = log.INFO)
 
@@ -25,10 +25,11 @@ while True:
 
     objetos = objetoCascade.detectMultiScale(
         gray,
-        # scaleFactor=1.1,
-        scaleFactor = 1.5,
-        minNeighbors = -2,
-        minSize = (2, 2),
+        # scaleFactor = 1.1,
+        # minNeighbors = 5,
+        scaleFactor = 7,
+        minNeighbors = 160,
+        minSize = (50, 50),
     )
 
     # Draw a rectangle around the faces
