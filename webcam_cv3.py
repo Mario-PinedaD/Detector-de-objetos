@@ -4,7 +4,8 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-cascPath = "carterav5_mimagenes.xml"
+#cascPath = "carterav5_mimagenes.xml"
+cascPath = "cajafigura.xml"
 objetoCascade = cv2.CascadeClassifier(cascPath)
 log.basicConfig(filename = "webcam.log", level = log.INFO)
 
@@ -27,8 +28,8 @@ while True:
         gray,
         # scaleFactor = 1.1,
         # minNeighbors = 5,
-        scaleFactor = 7,
-        minNeighbors = 160,
+        scaleFactor = 6,
+        minNeighbors = 75,
         minSize = (50, 50),
     )
 
